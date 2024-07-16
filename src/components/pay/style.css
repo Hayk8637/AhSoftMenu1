@@ -1,0 +1,28 @@
+.pay {
+    width: 100%;
+    max-width: 400px;
+    height: 74px;
+    background-color: #FFFFFF;
+    border-radius: 22px 22px 0 0 ;
+    border: 1px 0 0 0 solid black;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+.pay > button {
+    text-align: center;
+    background-color: #FF7800;
+    margin: auto;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+    font-size: 16.51px;
+    width: 80%;
+    max-width: 360px;
+    height: 44px;
+    cursor: pointer;
+}
