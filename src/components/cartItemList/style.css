@@ -26,7 +26,7 @@
 
 .cartItemList > .cartItem > .cartItemDet > .left {
     display: inline-block;
-    width: 40%;
+    width: 45%;
     height: 100%;
     border-radius: 5px;
 }
@@ -35,12 +35,13 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+    
 }
 
 .cartItemList > .cartItem > .cartItemDet > .right {
     display: inline-block;
     padding-left: 10px;
-    width: calc(60% - 10px);
+    width: calc(55% - 10px);
     height: 100%;
 }
 

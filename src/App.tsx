@@ -6,9 +6,11 @@ import Menu from './pages/menu/Menu';
 import Cart from './pages/cart/Cart';
 import MenuItemDescription from './pages/menuItemDescription/MenuItemDescription';
 import Error404 from './pages/error404/Error404';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   return <Router>
+    <CartProvider>
       <Routes>
         <Route path='/' element={<Error404 />}/>
         <Route path='/MENUBYQR' element={<Home/>} />
@@ -18,6 +20,7 @@ function App() {
         <Route path='/MENUBYQR/cart' element= {<Cart/>}/>
         <Route path='*' element={<Error404/>}/>
       </Routes>
+      </CartProvider>
   </Router>;
 }
 
