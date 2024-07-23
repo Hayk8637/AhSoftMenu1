@@ -11,10 +11,11 @@ function App() {
   return <Router>
       <Routes>
         <Route path='/' element={<Error404 />}/>
-        <Route path='/r' element={<Home/>} />
-        <Route path='/menu' element={<Menu/>}/>
-        <Route path='/menu/description' element={<MenuItemDescription/>}/>
-        <Route path='/cart' element= {<Cart/>}/>
+        <Route path='/MENUBYQR' element={<Home/>} />
+        <Route path='/MENUBYQR/menu' element={<Home/>}/>
+        <Route path='/MENUBYQR/menu/description' element={<MenuItemDescription/>}/>
+        <Route path='/MENUBYQR/menu/*' element={<Menu/>}/>
+        <Route path='/MENUBYQR/cart' element= {<Cart/>}/>
         <Route path='*' element={<Error404/>}/>
       </Routes>
   </Router>;

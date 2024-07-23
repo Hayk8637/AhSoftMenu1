@@ -7,7 +7,7 @@ const HeaderMenu: React.FC = () => {
     const centerText = currentPath.split('/')[currentPath.split('/').length-1];
     var returnBack = currentPath.split('/').slice(0,-1).join('/');
     if(centerText === 'cart'){
-        returnBack = '/'
+        returnBack = '/MENUBYQR'
     }
        return (
         <div className="headerMenu">
@@ -19,7 +19,7 @@ const HeaderMenu: React.FC = () => {
             </div>
             <div className="right">
                 {/* <a className='heart' href="/heart"><img src={heart} alt="" /></a> */}
-                <a className='cart' href="/cart"><ShoppingCartOutlined  style={{ color: 'black' }} /></a>
+                <a className='cart' href="/MENUBYQR/cart"><ShoppingCartOutlined  style={{ color: 'black' }} /></a>
             </div>
         </div>
     );

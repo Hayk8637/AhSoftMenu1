@@ -1,6 +1,7 @@
 import logo from '../../assets/logo/English.png'
 import './style.css'
-import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons'
+import {  ShoppingCartOutlined } from '@ant-design/icons'
+// SearchOutlined, 
 const Header:React.FC = () => {
     return <>
         <div className='header'>
@@ -10,13 +11,13 @@ const Header:React.FC = () => {
                 </div>
                 <div className='right'>
                     {/* <a className='heart' href="/heart"><img src={heart} alt="" /></a> */}
-                    <a className='cart' href="/cart"><ShoppingCartOutlined style={{ color: 'black' }}/></a>
+                    <a className='cart' href="/MENUBYQR/cart"><ShoppingCartOutlined style={{ color: 'black' }}/></a>
                 </div>
             </div>
-                <form className='search' >
+                {/* <form className='search' >
                     <input type="text" id="searchInput" />
                     <button type="submit"><SearchOutlined style={{ color: 'black' }}/></button>
-                </form>
+                </form> */}
         </div>
     </>
 }

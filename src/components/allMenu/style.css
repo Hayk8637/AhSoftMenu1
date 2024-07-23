@@ -1,6 +1,7 @@
 .allMenu {
     width: 100%;
     max-width: 400px;
+    /* margin-top: 80px; */
     padding-bottom: 80px;
 }
 
@@ -14,7 +15,8 @@
     width: 95%;
     margin: auto;
 }
-.allMenu > .menuCategories >a > .meunCategoryItem {
+
+.allMenu > .menuCategories > button {
     width: 48%;
     height: 127px;
     margin-top: 10px;
@@ -25,12 +27,14 @@
     border: none;
     background: none;
     cursor: pointer;
-}
-/* .allMenu > .menuCategories >.meunCategoryItem > img {
-
-} */
-.allMenu > .menuCategories> a >.meunCategoryItem > a {
     color: white;
     font-size: 20px;
     text-decoration: none;
 }
+/* 
+.allMenu > .menuCategories> a >.meunCategoryItem > a {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+} */
+

@@ -5,7 +5,7 @@ import { Carousel } from 'antd';
 
 interface BannerImage {
     id: number;
-    imageUrl: string;
+    url: string;
 }
 
 const contentStyle: React.CSSProperties = {
@@ -22,9 +22,14 @@ const Banner: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        axios.get<BannerImage[]>('https://api.example.com/banner-images')
+        axios.get('https://menubyqr-default-rtdb.firebaseio.com/MENUBYQR/banner.json')
             .then(response => {
-                setBannerImages(response.data);
+                const data = response.data;
+                const parsedItems = data.map((item: { img: string }, index: number) => ({
+                    id: index + 1,
+                    url: item.img,
+                }));
+                setBannerImages(parsedItems);
                 setLoading(false);
             })
             .catch(error => {
@@ -41,8 +46,8 @@ const Banner: React.FC = () => {
             <Carousel autoplay autoplaySpeed={4000} speed={1000} className='bannerCarousel'>
                 {bannerImages.map(image => (
                     <div key={image.id}>
-                        <div style={{ ...contentStyle, backgroundImage: `url(${image.imageUrl})` }}>
-                            <h3>{image.id}</h3>
+                        <div style={{ ...contentStyle, backgroundImage: `url(${image.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                            {/* <h3>{image.id}</h3> */}
                         </div>
                     </div>
                 ))}

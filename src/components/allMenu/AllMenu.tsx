@@ -14,9 +14,15 @@ const AllMenu: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        axios.get<MenuCategoryItem[]>('https://api.example.com/menu-items')
+        axios.get('https://menubyqr-default-rtdb.firebaseio.com/MENUBYQR/category.json')
             .then(response => {
-                setMenuItems(response.data);
+                const data = response.data;
+                const parsedItems = Object.keys(data).map((key, index) => ({
+                    id: index + 1,
+                    img: data[key].img,
+                    name: data[key].name,
+                }));
+                setMenuItems(parsedItems);
                 setLoading(false);
             })
             .catch(error => {
@@ -26,7 +32,7 @@ const AllMenu: React.FC = () => {
     }, []);
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Empty data</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className="allMenu">
@@ -41,7 +47,7 @@ const AllMenu: React.FC = () => {
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                         }}
-                        onClick={() => window.location.href = '/menu'}
+                        onClick={() => window.location.href = `/MENUBYQR/menu/${item.name}`}
                     >
                         {item.name}
                     </button>
