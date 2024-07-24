@@ -30,33 +30,31 @@ const MenuCategoryItems: React.FC = () => {
       .then(response => {
         const data = response.data;
 
-        const isValidItem = (item: any) => {
-          return item?.name && item?.price && item?.currency && item?.img;
-        };
+        const isValidItem = (item: any) => item?.name && item?.price && item?.currency && item?.img;
 
-        const parsedItems = Array.isArray(data) ? 
-          data.map((item, index) => ({
-            id: index + 1,
-            name: item?.name || '',
-            price: item?.price || 0,
-            currency: item?.currency || '$',
-            img: item?.img || '',
-            category: category
-          })).filter(isValidItem)
-          : Object.keys(data).map((key, index) => ({
-            id: index + 1,
-            name: data[key]?.name || '',
-            price: data[key]?.price || 0,
-            currency: data[key]?.currency || '$',
-            img: data[key]?.img || '',
-            category: category
-          })).filter(isValidItem);
+        const parsedItems = Array.isArray(data) 
+          ? data.map((item: any, index: number) => ({
+              id: index,
+              name: item?.name || '',
+              price: item?.price || 0,
+              currency: item?.currency || '$',
+              img: item?.img || '',
+              category
+            })).filter(isValidItem)
+          : Object.keys(data).map((key: string, index: number) => ({
+              id: index ,
+              name: data[key]?.name || '',
+              price: data[key]?.price || 0,
+              currency: data[key]?.currency || '$',
+              img: data[key]?.img || '',
+              category
+            })).filter(isValidItem);
 
         setMenuItems(parsedItems);
         setLoading(false);
       })
       .catch(error => {
-        setError(error.message);
+        setError('Failed to fetch menu items');
         setLoading(false);
       });
   }, [category]);
@@ -90,8 +88,7 @@ const MenuCategoryItems: React.FC = () => {
                   <button
                     className='cart'
                     onClick={() => {
-                      // console.log('Adding to cart:', { id: item.id, category: item.category });
-                      addToCart({ id: item.id, category: item.category, count: 1 });
+                      addToCart({ id: item.id, category: item.category,price: item.price, count: 1 }); 
                     }}
                   >
                     Add to Cart

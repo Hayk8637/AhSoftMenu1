@@ -17,7 +17,6 @@ const MenuItemDetail: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // Example API endpoint, replace with your actual endpoint
         axios.get<MenuItemDetailData>('https://api.example.com/menu-item-detail')
             .then(response => {
                 setMenuItemDetail(response.data);

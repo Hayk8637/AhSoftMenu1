@@ -18,7 +18,7 @@ const AllMenu: React.FC = () => {
             .then(response => {
                 const data = response.data;
                 const parsedItems = Object.keys(data).map((key, index) => ({
-                    id: index + 1,
+                    id: index,
                     img: data[key].img,
                     name: data[key].name,
                 }));

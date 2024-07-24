@@ -17,7 +17,6 @@ const CartItemList: React.FC = () => {
   const [cartItems, setCartItems] = useState<FullCartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     const fetchCartItems = async () => {
       setLoading(true);

@@ -19,7 +19,7 @@ const MenuCategoryNavigation: React.FC = () => {
             .then(response => {
                 const data = response.data;
                 const parsedCategories = Object.keys(data).map((key, index) => ({
-                    id: index + 1,
+                    id: index,
                     name: data[key].name,
                 }));
                 setCategories(parsedCategories);
