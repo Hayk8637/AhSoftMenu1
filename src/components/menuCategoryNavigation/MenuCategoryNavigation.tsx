@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './style.css';
 
 interface Categories {
@@ -40,13 +40,13 @@ const MenuCategoryNavigation: React.FC = () => {
     return (
         <div className="menuCategoryNavigation">
             {categories.map(category => (
-                <a
+                <Link
                     key={category.id}
-                    href={`/MENUBYQR/menu/${category.name}`}
-                    className={currentCategoryName === category.name ? 'activeTab' : ''}
-                >
+                    to={`/MENUBYQR/menu/${category.name}`}
+                    className={currentCategoryName === category.name ? 'activeTab a' : 'a'}
+>
                     {category.name}
-                </a>
+                </Link>
             ))}
         </div>
     );

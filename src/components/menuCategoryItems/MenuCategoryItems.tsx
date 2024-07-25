@@ -72,7 +72,7 @@ const MenuCategoryItems: React.FC = () => {
             <div key={item.id} className="menuCategoryItem">
               <div className='menuCategoryItemCart'>
                 <div className="up">
-                  <a href={`/menu/${item.id}`}>
+                  <a href={`/MENUBYQR/menu/${category}/${item.id}`}>
                     <div className="itemImg">
                       <img src={item.img || burgerImage} alt={item.name} />
                     </div>

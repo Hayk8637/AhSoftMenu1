@@ -15,8 +15,8 @@ function App() {
         <Route path='/' element={<Error404 />}/>
         <Route path='/MENUBYQR' element={<Home/>} />
         <Route path='/MENUBYQR/menu' element={<Home/>}/>
-        <Route path='/MENUBYQR/menu/description' element={<MenuItemDescription/>}/>
         <Route path='/MENUBYQR/menu/*' element={<Menu/>}/>
+        <Route path='/MENUBYQR/menu/*/*' element={<MenuItemDescription/>}/>
         <Route path='/MENUBYQR/cart' element= {<Cart/>}/>
         <Route path='*' element={<Error404/>}/>
       </Routes>
