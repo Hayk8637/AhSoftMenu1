@@ -4,6 +4,7 @@ import { db } from '../../firebaseConfig';
 import style from './style.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IEstablishmentStyles, ILanguage, IMenuCategoryItem } from '../../interfaces/interfaces';
+import { Button } from 'antd';
 
 
 const AllMenu: React.FC = () => {
@@ -14,7 +15,7 @@ const AllMenu: React.FC = () => {
   const pathname = useLocation().pathname || '';
   const establishmentId = pathname.split('/').filter(Boolean).pop() || '';
   const [currentLanguage, setCurrentLanguage] = useState<ILanguage>('en');
-  
+  const [isBannerImages , setBannerImages] = useState(false)
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language');
     if (savedLanguage === 'en' || savedLanguage === 'am' || savedLanguage === 'ru') {
@@ -44,6 +45,7 @@ const AllMenu: React.FC = () => {
             await setEstablishmentStyles(data.styles);
             items.sort((a, b) => a.order - b.order);
             setMenuItems(items);
+            setBannerImages(data.bannerUrls.exists)
           } else {
           }
         } catch (error) {
@@ -55,24 +57,27 @@ const AllMenu: React.FC = () => {
 
 
   return (
-    <div className={style.allMenu} style={{backgroundColor: `#${establishmentStyles?.color1}`}}>
+    <div className={style.allMenu} style={{backgroundColor: `#${establishmentStyles?.color1}` ,  minHeight: isBannerImages ? 'calc(100vh - 346px)' : 'calc(100vh - 115px)' }}>
       <div className={style.menuCategories}>
       {menuItems.map(item => (
-        <button
-          key={item.id}
-          className={style.menuCategoryItem}
-          style={{
-            backgroundColor: `#${establishmentStyles?.color4}`,
-            backgroundImage: establishmentStyles?.showImg ? `url(${item.imgUrl || ''})` : 'none',
-          }}
-          onClick={(e) => {
-            const target = e.target as HTMLElement;
-            if (!target.closest('.ant-popover')) {
-              navigate(`./${item.id}`);
-            }
-          }}>
-          <a href={`./${item.id}`}>{item.name[currentLanguage]}</a>
-        </button>
+        <Button
+        key={item.id}
+        className={style.menuCategoryItem}
+        style={{
+          border: `1px solid #${establishmentStyles?.color2}`,
+          backgroundColor: `#${establishmentStyles?.color4}`,
+          backgroundImage: establishmentStyles?.showImg ? `url(${item.imgUrl || ''})` : 'none',
+        }}
+        onClick={(e) => {
+          const target = e.target as HTMLElement;
+          if (!target.closest('.ant-popover')) {
+            navigate(`./${item.id}`);
+          }
+        }}
+      >
+        <a href={`./${item.id}`} style={{ color: `#${establishmentStyles?.color2}`}} >{item.name[currentLanguage]}</a>
+      </Button>
+      
       ))}
       </div>
     </div>

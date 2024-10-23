@@ -41,7 +41,7 @@ const Banner: React.FC = () => {
               setEstablishmentStyles(data.styles);
             }
           } else {
-            notification.error({ message: 'Error', description: 'Failed to fetch banners.' });
+              return;
           }
         } catch (error) {
           notification.error({ message: 'Error', description: `Error fetching banner images: ${error}` });

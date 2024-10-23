@@ -7,8 +7,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/:userId/:establishmentId/' element={<HomeMenu />} />
-        <Route path='/:userId/:establishmentId/:categoryId/' element={<Menu />} />
+        <Route path='/:userId/:establishmentId' element={<HomeMenu />} />
+        <Route path='/:userId/:establishmentId/:categoryId' element={<Menu />} />
         <Route path='*' element={<ConditionalRedirect />} />
       </Routes>
     </Router>
