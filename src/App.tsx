@@ -1,27 +1,23 @@
-import React from 'react';
 import './App.css';
-import { Route, Routes , BrowserRouter as Router } from 'react-router-dom';
-import Home from './pages/home/Home';
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
+import HomeMenu from './pages/HomeMenu/HomeMenu';
 import Menu from './pages/menu/Menu';
-import Cart from './pages/cart/Cart';
-import MenuItemDescription from './pages/menuItemDescription/MenuItemDescription';
-import Error404 from './pages/error404/Error404';
-import { CartProvider } from './context/CartContext';
 
 function App() {
-  return <Router>
-    <CartProvider>
+  return (
+    <Router>
       <Routes>
-        <Route path='/' element={<Error404 />}/>
-        <Route path='/MENUBYQR' element={<Home/>} />
-        <Route path='/MENUBYQR/menu' element={<Home/>}/>
-        <Route path='/MENUBYQR/menu/*' element={<Menu/>}/>
-        <Route path='/MENUBYQR/menu/*/*' element={<MenuItemDescription/>}/>
-        <Route path='/MENUBYQR/cart' element= {<Cart/>}/>
-        <Route path='*' element={<Error404/>}/>
+        <Route path='/:userId/:establishmentId/' element={<HomeMenu />} />
+        <Route path='/:userId/:establishmentId/:categoryId/' element={<Menu />} />
+        <Route path='*' element={<ConditionalRedirect />} />
       </Routes>
-      </CartProvider>
-  </Router>;
+    </Router>
+  );
 }
+
+const ConditionalRedirect = () => {
+  window.location.href = 'https://www.menubyqr.com/';
+  return null;
+};
 
 export default App;

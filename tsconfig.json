@@ -18,7 +18,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "src", // Added this line to set the base URL for the project
+    "paths": {
+      "@config/*": ["config/*"], // Add custom path mapping for configuration files
+      "@assets/*": ["assets/*"], // Add custom path mapping for assets
+      "@components/*": ["components/*"] // You can add more custom mappings if needed
+    }
   },
   "include": [
     "src"

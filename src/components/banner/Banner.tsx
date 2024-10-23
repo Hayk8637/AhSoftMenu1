@@ -1,59 +1,82 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './style.css';
-import { Carousel } from 'antd';
-
-interface BannerImage {
-    id: number;
-    url: string;
-}
+import styles from './style.module.css';
+import { Carousel, notification } from 'antd';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebaseConfig';
+import { useLocation } from 'react-router-dom';
+import { IBannerImage, IEstablishmentStyles } from '../../interfaces/interfaces';
 
 const contentStyle: React.CSSProperties = {
-    height: '184px',
-    color: '#fff',
-    textAlign: 'center',
-    background: '#364d79',
-    borderRadius: '22px',
+  height: '200px',  
+  width: '100%',
+  position: 'relative',
+  overflow: 'hidden',
+  borderRadius: '22px',
 };
 
 const Banner: React.FC = () => {
-    const [bannerImages, setBannerImages] = useState<BannerImage[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  const [bannerImages, setBannerImages] = useState<IBannerImage[]>([]);
+  const pathname = useLocation().pathname || '';
+  const establishmentId = pathname.split('/').filter(Boolean).pop() || '';
+  const [establishmentStyles, setEstablishmentStyles] = useState<IEstablishmentStyles>();
+  const [userId, setUserId] = useState<string | null>(null);
 
-    useEffect(() => {
-        axios.get('https://menubyqr-default-rtdb.firebaseio.com/MENUBYQR/banner.json')
-            .then(response => {
-                const data = response.data;
-                const parsedItems = data.map((item: { img: string }, index: number) => ({
-                    id: index + 1,
-                    url: item.img,
-                }));
-                setBannerImages(parsedItems);
-                setLoading(false);
-            })
-            .catch(error => {
-                setError(error.message);
-                setLoading(false);
-            });
-    }, []);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+  useEffect(() => {
+    setUserId(pathname.split('/')[pathname.split('/').length-2])
+    const fetchBanners = async () => {
+      if (userId && establishmentId) {
+        try {
+          const docRef = doc(db, 'users', userId, 'establishments', establishmentId);
+          const docSnap = await getDoc(docRef);
+          
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            if (data?.info?.bannerUrls) {
+              const parsedItems = Object.keys(data.info.bannerUrls).map((key) => ({
+                id: key,
+                url: data.info.bannerUrls[key] as string,
+              }));
+              setBannerImages(parsedItems);
+              setEstablishmentStyles(data.styles);
+            }
+          } else {
+            notification.error({ message: 'Error', description: 'Failed to fetch banners.' });
+          }
+        } catch (error) {
+          notification.error({ message: 'Error', description: `Error fetching banner images: ${error}` });
+        }
+      }
+    };
 
-    return (
-        <div className='banner'>
-            <Carousel autoplay autoplaySpeed={4000} speed={1000} className='bannerCarousel'>
-                {bannerImages.map(image => (
-                    <div key={image.id}>
-                        <div style={{ ...contentStyle, backgroundImage: `url(${image.url})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-                            {/* <h3>{image.id}</h3> */}
-                        </div>
-                    </div>
-                ))}
-            </Carousel>
+    fetchBanners();
+  }, [userId, establishmentId, pathname]);
+  
+  
+  return (
+    <div className={styles.banner} style={{backgroundColor: `#${establishmentStyles?.color1}`}}>
+      {bannerImages.length === 0 ? (
+        null
+      ) : (
+        <div style={{ position: 'relative' }}>
+          <Carousel autoplay autoplaySpeed={4000} speed={1000} className={styles.bannerCarousel} dots={false}>
+            {bannerImages.map((image) => (
+              <div key={image.id}>
+                <div style={contentStyle}>
+                  <img
+                    src={image.url || ''}
+                    alt={`Banner ${image.id}`}
+                    style={{ objectFit: 'cover' }}
+                    className={styles.carouselImage} 
+                  />
+                </div>
+              </div>
+            ))}
+          </Carousel>
         </div>
-    );
-}
+      )}
+    </div>
+  );
+};
 
 export default Banner;
