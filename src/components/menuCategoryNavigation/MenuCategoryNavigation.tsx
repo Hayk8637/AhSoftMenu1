@@ -16,7 +16,11 @@ const MenuCategoryNavigation: React.FC = () => {
   const [userId, setUserId] = useState<string | null>(null);  
   const [currentLanguage, setCurrentLanguage] = useState<ILanguage>('en'); 
   const navigate = useNavigate(); // Use the useNavigate hook
-
+  useEffect(()=>{
+    if(!userId){
+      setUserId(pathname[pathname.length-3]);
+    }
+  }, [pathname, userId])
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language');
     if (savedLanguage === 'en' || savedLanguage === 'am' || savedLanguage === 'ru') {
@@ -25,9 +29,9 @@ const MenuCategoryNavigation: React.FC = () => {
       localStorage.setItem('language', 'en');
     }
   }, []);
-
+  
   useEffect(() => {
-    setUserId(pathname[pathname.length-3]);
+    
     const fetchCategories = async () => {
       if (userId && establishmentId) {
         try {
@@ -56,7 +60,7 @@ const MenuCategoryNavigation: React.FC = () => {
       }
     };
     fetchCategories();
-  }, [userId, establishmentId, pathname]);
+  }, [userId, establishmentId]);
 
   const handleCategoryClick = (categoryId: string) => {
     navigate(`/${userId}/${establishmentId}/${categoryId}`);

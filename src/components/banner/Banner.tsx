@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './style.module.css';
-import { Carousel, notification } from 'antd';
+import { Carousel } from 'antd';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 import { useLocation } from 'react-router-dom';
@@ -26,7 +26,6 @@ const Banner: React.FC = () => {
     setUserId(pathname.split('/')[pathname.split('/').length-2])
     const fetchBanners = async () => {
       if (userId && establishmentId) {
-        try {
           const docRef = doc(db, 'users', userId, 'establishments', establishmentId);
           const docSnap = await getDoc(docRef);
           
@@ -41,12 +40,9 @@ const Banner: React.FC = () => {
               setEstablishmentStyles(data.styles);
             }
           } else {
-              return;
+             return;
           }
-        } catch (error) {
-          notification.error({ message: 'Error', description: `Error fetching banner images: ${error}` });
         }
-      }
     };
 
     fetchBanners();
